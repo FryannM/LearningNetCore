@@ -25,6 +25,14 @@ namespace SistemaAC.Controllers
             return View(await _context.ApplicationUser.ToListAsync());
         }
 
+
+         public async Task<List<ApplicationUser>> getUser(string id )
+        {
+            List<ApplicationUser> usuario = new List<ApplicationUser>();
+            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync( x => x.Id ==id);
+            usuario.Add(appUsuario);
+            return usuario;
+        }
         // GET: Users/Details/5
         public async Task<IActionResult> Details(string id)
         {
