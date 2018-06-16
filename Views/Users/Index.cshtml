@@ -37,17 +37,12 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.UserName)
                 </td>
-
                 <td>
                     @Html.DisplayFor(modelItem => item.Email)
                 </td>
-
-
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
-
-
 
                 <td>
                     <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUser('@item.Id','Users/getUser')">Edit</a>
@@ -71,6 +66,7 @@
                 <form>
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" name="id" id="id" />
+
                     <div class="form-group">
                         <label for="UserName" class="control-label">Username</label>
                         <input readonly name="UserName" id="UserName " class="form-control" />
@@ -78,12 +74,8 @@
 
                     <div class="form-group">
                         <label for="email" class="control-label">Email</label>
-                        <input for="email"  name ="email"id="email" class="form-control" />
+                        <input for="email" name="email" id="email" class="form-control" />
                     </div>
-
-
-
-
                     <div class="form-group">
                         <label for="PhoneNumber" class="control-label">PhoneNumber</label>
                         <input name="PhoneNumber" id="PhoneNumber" class="form-control" />
@@ -95,7 +87,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-primary" onclick="EditUser('Users/EditUsers')">Save changes</button>
             </div>
         </div>
     </div>
