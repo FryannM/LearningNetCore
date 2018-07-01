@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,11 @@ namespace SistemaAC.Controllers
     public class UsersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        UserManager<ApplicationUser> _userManager;
+        RoleManager<IdentityRole> _roleManager;
+        UsersRole _usersRole;
+
+        public List<SelectListItem> usuarioRole;
 
         public UsersController(ApplicationDbContext context)
         {
@@ -26,20 +32,20 @@ namespace SistemaAC.Controllers
         }
 
 
-         public async Task<List<ApplicationUser>> getUser(string id )
+        public async Task<List<ApplicationUser>> getUser(string id)
         {
             List<ApplicationUser> usuario = new List<ApplicationUser>();
-            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync( x => x.Id ==id);
+            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(x => x.Id == id);
             usuario.Add(appUsuario);
             return usuario;
         }
-      
-       
 
-         public async Task<string>EditUsers( string id, string userName, string email, string phoneNumber, int accessFailedCount,
-          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
-           string  normalizedEmail, string normalizedUserName, string passwordHash,bool phoneNumberConfirmed,
-          string  securityStamp,bool twoFactorEnabled, ApplicationUser applicationUser)
+
+
+        public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
+         string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
+          string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
+         string securityStamp, bool twoFactorEnabled, ApplicationUser applicationUser)
         {
             var resp = "";
             try
@@ -63,7 +69,7 @@ namespace SistemaAC.Controllers
                     TwoFactorEnabled = twoFactorEnabled
                     //Actualizando datos
 
-                    
+
 
 
                 };
