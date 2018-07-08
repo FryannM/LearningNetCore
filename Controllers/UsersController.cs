@@ -20,18 +20,49 @@ namespace SistemaAC.Controllers
 
         public List<SelectListItem> usuarioRole;
 
-        public UsersController(ApplicationDbContext context)
+        public UsersController(ApplicationDbContext context, 
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole>roleManager)
         {
             _context = context;
+            _userManager = userManager;
+            _roleManager = roleManager;
+            _usersRole = new UsersRole();
+            usuarioRole = new List<SelectListItem>();
         }
 
         // GET: Users
         public async Task<IActionResult> Index()
         {
-            return View(await _context.ApplicationUser.ToListAsync());
+            var ID = "";
+
+             //declarando un obj list de la clase Usuario
+            List<Users> user = new List<Users>();
+
+            //Obteniendo todos los registro de la tabla donde almaceno los usuarios
+            // y lo almaceno en el obj
+            var appUser = await _context.ApplicationUser.ToListAsync();
+
+            foreach (var Data in appUser)
+            {
+                ID = Data.Id;
+                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, ID);
+
+                user.Add(new Users()
+                {
+                    Id = Data.Id,
+                    UserName = Data.UserName,
+                    PhoneNumber = Data.PhoneNumber,
+                    Email = Data.Email,
+                    Role = usuarioRole[0].Text
+
+                });
+
+            }
+
+            return View(user.ToList());
+          //  return View(await _context.ApplicationUser.ToListAsync());
         }
-
-
         public async Task<List<ApplicationUser>> getUser(string id)
         {
             List<ApplicationUser> usuario = new List<ApplicationUser>();
@@ -39,9 +70,6 @@ namespace SistemaAC.Controllers
             usuario.Add(appUsuario);
             return usuario;
         }
-
-
-
         public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
           string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
@@ -68,10 +96,6 @@ namespace SistemaAC.Controllers
                     SecurityStamp = securityStamp,
                     TwoFactorEnabled = twoFactorEnabled
                     //Actualizando datos
-
-
-
-
                 };
                 _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
@@ -82,14 +106,8 @@ namespace SistemaAC.Controllers
 
                 resp = "No Save";
             }
-
-
             return resp;
-
-
         }
-
-
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);
