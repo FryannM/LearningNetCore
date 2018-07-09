@@ -93,6 +93,17 @@ namespace SistemaAC.Controllers
            
             return user;
         }
+
+        public async Task<List<SelectListItem>>GetRoles ()
+        {
+            //creamos un obj llamado rolesLista
+            List<SelectListItem> rolesLista = new List<SelectListItem>();
+
+            return rolesLista;
+        }
+
+
+
         public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
           string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,

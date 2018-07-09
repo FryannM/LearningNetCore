@@ -1,11 +1,11 @@
 ﻿// Write your JavaScript code.
 
+
 $('#modalEditar').on('shown.bs.modal', function () {
     $('#myInput').focus()
 })
 
 function getUser(id, action) {
-
     $.ajax({
         type: "POST",
         url: action,
@@ -15,14 +15,12 @@ function getUser(id, action) {
         }
     });
 }
-
 var items;
+var f = 0;
 var id;
 var userName;
 var email;
 var phoneNumber;
-
-
 var accessFailedCount;
 var concurrencyStamp;
 var emailConfirmed;
@@ -37,8 +35,8 @@ var twoFactorEnabled;
 
 
 function ShowUser(reponse) {
-
     items = reponse;
+    f = 0;
     for (var i = 0; i < 3; i++) {
         var x = document.getElementById('Select');
         x.remove(i);
@@ -52,8 +50,21 @@ function ShowUser(reponse) {
         document.getElementById('Select').options[0] = new Option(val.role, val.roleId);
     });
 }
-
-
+function getRoles(action) {
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: {},
+        success: function (response) {
+            if (f == 0) {
+                for (var i = 0; i < response.lenght; i++) {
+                    document.getElementById('Select').options[i].Option(response[i].Text, response[i].value);
+                }
+            }
+            f = 1;
+        }
+    });
+}
 function EditUser(action) {
     id = $('input[name=id]')[0].value;
     email = $('input[name=email]')[0].value;
@@ -74,7 +85,6 @@ function EditUser(action) {
         securityStamp = val.securityStamp;
         twoFactorEnabled = val.twoFactorEnabled;
     });
-
     $.ajax({
         type: 'POST',
         url: action,
@@ -85,18 +95,13 @@ function EditUser(action) {
             securityStamp, twoFactorEnabled
 
         },
-
-
          success: function (response) {
              if (response = "Save") {
                  window.location.href = "Users"
              }
              else {
                  alert("No se pueden Editar los Datos del Usuario");
-
              }
-
         }
-
     });
 }
