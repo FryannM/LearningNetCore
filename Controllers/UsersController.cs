@@ -63,12 +63,35 @@ namespace SistemaAC.Controllers
             return View(user.ToList());
           //  return View(await _context.ApplicationUser.ToListAsync());
         }
-        public async Task<List<ApplicationUser>> getUser(string id)
+        public async Task<List<Users>> getUser(string id)
         {
-            List<ApplicationUser> usuario = new List<ApplicationUser>();
-            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(x => x.Id == id);
-            usuario.Add(appUsuario);
-            return usuario;
+            List<Users> user = new List<Users>();
+            var appUsuario = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
+
+            var appUser = await _context.ApplicationUser.SingleOrDefaultAsync(x => x.Id == id);
+            usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, id);
+            user.Add(new Users()
+            {
+                Id =appUser.Id,
+                UserName = appUser.UserName,
+                Email = appUser.Email,
+                Role = usuarioRole[0].Text,
+                RoleId = usuarioRole[0].Value,
+                PhoneNumber = appUser.PhoneNumber,
+                AccessFailedCount = appUser.AccessFailedCount,
+                ConcurrencyStamp = appUser.ConcurrencyStamp,
+                EmailConfirmed = appUser.EmailConfirmed,
+                LockoutEnabled = appUser.LockoutEnabled,
+                LockoutEnd = appUser.LockoutEnd,
+                NormalizedEmail = appUser.NormalizedEmail,
+                NormalizedUserName = appUser.NormalizedUserName,
+                PasswordHash = appUser.PasswordHash,
+                PhoneNumberConfirmed = appUser.PhoneNumberConfirmed,
+                SecurityStamp = appUser.SecurityStamp,
+                TwoFactorEnabled = appUser.TwoFactorEnabled
+            });
+           
+            return user;
         }
         public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,

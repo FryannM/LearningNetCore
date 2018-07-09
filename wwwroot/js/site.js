@@ -39,12 +39,17 @@ var twoFactorEnabled;
 function ShowUser(reponse) {
 
     items = reponse;
+    for (var i = 0; i < 3; i++) {
+        var x = document.getElementById('Select');
+        x.remove(i);
+    }
     
     $.each(items, function (index, val) {
         $('input[name=id]').val(val.id);
         $('input[name=UserName]').val(val.userName);
         $('input[name=email]').val(val.email);
         $('input[name=PhoneNumber]').val(val.phoneNumber);
+        document.getElementById('Select').options[0] = new Option(val.role, val.roleId);
     });
 }
 
