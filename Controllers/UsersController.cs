@@ -107,7 +107,7 @@ namespace SistemaAC.Controllers
         public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
           string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
-         string securityStamp, bool twoFactorEnabled, ApplicationUser applicationUser)
+         string securityStamp, bool twoFactorEnabled, string selectRole, ApplicationUser applicationUser)
         {
             var resp = "";
             try
@@ -129,10 +129,25 @@ namespace SistemaAC.Controllers
                     PhoneNumberConfirmed = phoneNumberConfirmed,
                     SecurityStamp = securityStamp,
                     TwoFactorEnabled = twoFactorEnabled
+                    
                     //Actualizando datos
                 };
                 _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
+                var user = await _userManager.FindByIdAsync(id);
+                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, id);
+
+                 if ( usuarioRole[0].Text !="No Role")
+                {
+                    await _userManager.RemoveFromRoleAsync(user, usuarioRole[0].Text);
+                }
+                  if ( selectRole == "No Role")
+                {
+                    selectRole = "Usuario";
+                }
+
+                var resultado = await _userManager.AddToRoleAsync(user, selectRole);
+
                 resp = "Save";
             }
             catch (Exception)
