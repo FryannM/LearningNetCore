@@ -48,6 +48,12 @@ function ShowUser(reponse) {
         $('input[name=email]').val(val.email);
         $('input[name=PhoneNumber]').val(val.phoneNumber);
         document.getElementById('Select').options[0] = new Option(val.role, val.roleId);
+
+        // Mostrando  los Detalles del usuario
+        $('#dEmail').text(val.email);
+        $('#dUserName').text(val.userName);
+        $('#dPhoneNumber').text(val.phoneNumber);
+        $('#dRole').text(val.role);
     });
 }
 function getRoles(action) {
@@ -104,4 +110,9 @@ function EditUser(action) {
              }
         }
     });
+}
+
+
+function hideDetailUser() {
+    $('#modalDetalle').modal("hide");
 }
