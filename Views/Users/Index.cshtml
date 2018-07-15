@@ -5,7 +5,6 @@
 }
 
 <h2>Index</h2>
-
 <p>
     @*<a asp-action="Create">Create New</a>*@
 </p>
@@ -18,16 +17,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Role)
             </th>
-
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-
-
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-           
         </tr>
     </thead>
     <tbody>
@@ -47,11 +42,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.PhoneNumber)
                 </td>
-
                 <td>
                     <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUser('@item.Id','Users/getUser')">Edit</a>
                     <a class="btn btn-warning" onclick="getUser('@item.Id','Users/getUser')" data-toggle="modal" data-target="#modalDetalle">Details</a>
-                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a class="btn btn-danger"  data-toggle="modal" data-target="#modalDelete" onclick="getUser('@item.Id','Users/getUser')">Delete</a>
                 </td>
             </tr>
         }
@@ -111,29 +105,50 @@
                 <h4 class="modal-title" id="myModalLabel">Detail Users</h4>
             </div>
             <div class="modal-body">
-                    <div class="form-group">
-                        <label for="UserName" class="control-label">Username</label>
-                        <p id="dUserName"> Usuario</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="Roles" class="control-label">Roles</label>
-                        <p id="dRole">Role</p>
+                <div class="form-group">
+                    <label for="UserName" class="control-label">Username</label>
+                    <p id="dUserName"> Usuario</p>
+                </div>
+                <div class="form-group">
+                    <label for="Roles" class="control-label">Roles</label>
+                    <p id="dRole">Role</p>
 
-                    </div>
+                </div>
 
-                    <div class="form-group">
-                        <label for="email" class="control-label">Email</label>
-                        <p id="dEmail">Email</p>
-                    </div>
-                    <div class="form-group">
-                        <label for="PhoneNumber" class="control-label">PhoneNumber</label>
-                        <p id="dPhoneNumber">PhoneNumber</p>
-                    </div>
+                <div class="form-group">
+                    <label for="email" class="control-label">Email</label>
+                    <p id="dEmail">Email</p>
+                </div>
+                <div class="form-group">
+                    <label for="PhoneNumber" class="control-label">PhoneNumber</label>
+                    <p id="dPhoneNumber">PhoneNumber</p>
+                </div>
 
-               </div>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-success" data-target="#modalEditar"     data-toggle="modal" onclick="hideDetailUser()">Edit</button>
+                <button type="button" class="btn btn-success" data-target="#modalEditar" data-toggle="modal" onclick="hideDetailUser()">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Delete-->
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel"> Do You Want to delete?</h4>
+            </div>
+            <div class="modal-body">
+                <h3 id="Euser"></h3>
+                <input type="hidden" name="EIduser" value="" id="EIduser" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button  type="button" class="btn btn-danger"  id="probando" @*onclick="DeleteUsers('Users/DeleteUsers')"*@>Delete</button>
             </div>
         </div>
     </div>

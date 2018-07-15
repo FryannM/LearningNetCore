@@ -54,6 +54,12 @@ function ShowUser(reponse) {
         $('#dUserName').text(val.userName);
         $('#dPhoneNumber').text(val.phoneNumber);
         $('#dRole').text(val.role);
+
+        // Mostrando los datos del usuario  para eliminarlos
+
+        $('#Euser').text(val.email);
+        $('input[name=EIduser]').val(val.userName);
+        
     });
 }
 function getRoles(action) {
@@ -116,3 +122,10 @@ function EditUser(action) {
 function hideDetailUser() {
     $('#modalDetalle').modal("hide");
 }
+
+//$(document).on("click", "#test-element", function () {
+
+$(document).on("click", "#probando", function () {
+    alert("Probando");
+
+});
