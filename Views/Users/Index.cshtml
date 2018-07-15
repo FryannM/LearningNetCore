@@ -36,27 +36,27 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserName)
-            </td>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserName)
+                </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Role)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Role)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
 
-            <td>
-                <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUser('@item.Id','Users/getUser')">Edit</a>
-                <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+                <td>
+                    <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUser('@item.Id','Users/getUser')">Edit</a>
+                    <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.Id">Details</a>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
         }
     </tbody>
 </table>
@@ -83,11 +83,7 @@
                         <label for="Roles" class="control-label">Roles</label>
                         <select id="Select" name="Select" class="form-control" onclick="getRoles('Users/GetRoles')">
                             <option value="0">Seleccione un Rol </option>
-
                         </select>
-                                
-                                
-
 
                     </div>
 
@@ -99,8 +95,6 @@
                         <label for="PhoneNumber" class="control-label">PhoneNumber</label>
                         <input name="PhoneNumber" id="PhoneNumber" class="form-control" />
                     </div>
-
-
 
                 </form>
             </div>

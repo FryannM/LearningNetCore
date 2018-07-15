@@ -21,6 +21,8 @@ var id;
 var userName;
 var email;
 var phoneNumber;
+var selectRole;
+var role;
 
 
 var accessFailedCount;
@@ -58,6 +60,8 @@ function EditUser(action) {
     id = $('input[name=id]')[0].value;
     email = $('input[name=email]')[0].value;
     phoneNumber = $('input[name=PhoneNumber]')[0].value;
+    role = $('input'['name =Select']);
+    selectRole = role.options[role.selectedIndex].text;
 
 
     $.each(items, function (index, val) {
@@ -82,7 +86,7 @@ function EditUser(action) {
             id, userName, email, phoneNumber, accessFailedCount,
             concurrencyStamp, emailConfirmed, lockoutEnabled, lockoutEnd,
             normalizedEmail, normalizedUserName, passwordHash, phoneNumberConfirmed,
-            securityStamp, twoFactorEnabled
+            securityStamp, twoFactorEnabled,selectRole
 
         },
 
