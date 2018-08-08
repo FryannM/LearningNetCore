@@ -45,7 +45,7 @@
                 <td>
                     <a class="btn btn-success" data-toggle="modal" data-target="#modalEditar" onclick="getUser('@item.Id','Users/getUser')">Edit</a>
                     <a class="btn btn-warning" onclick="getUser('@item.Id','Users/getUser')" data-toggle="modal" data-target="#modalDetalle">Details</a>
-                    <a class="btn btn-danger"  data-toggle="modal" data-target="#modalDelete" onclick="getUser('@item.Id','Users/getUser')">Delete</a>
+                    <a class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" onclick="getUser('@item.Id','Users/getUser')">Delete</a>
                 </td>
             </tr>
         }
@@ -148,8 +148,15 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button  type="button" class="btn btn-danger"  id="probando" @*onclick="DeleteUsers('Users/DeleteUsers')"*@>Delete</button>
+                <button type="button" class="btn btn-danger" @*id="probando"*@ onclick="DeleteUsers('Users/DeleteUsers')" >Delete</button>
             </div>
         </div>
     </div>
 </div>
+@section scripts 
+{
+    <script>
+        var DeleteUsers = @Url.Action("Users", "DeleteUsers");
+    </script>
+
+}
