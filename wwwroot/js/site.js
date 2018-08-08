@@ -78,6 +78,7 @@ function getRoles(action) {
     });
 }
 function EditUser(action) {
+    debugger;
     id = $('input[name=id]')[0].value;
     email = $('input[name=email]')[0].value;
     phoneNumber = $('input[name=PhoneNumber]')[0].value;
@@ -123,9 +124,23 @@ function hideDetailUser() {
     $('#modalDetalle').modal("hide");
 }
 
-//$(document).on("click", "#test-element", function () {
 
-$(document).on("click", "#probando", function () {
-    alert("Probando");
 
-});
+function DeleteUsers(action) {
+    debugger;
+
+    id = $('input[name=id]')[0].value;
+    $.ajax({
+        type: "POST",
+        url: action,
+        data: { id },
+        success: function (response) {
+            if (response === "Delete") {
+                window.location.href = "Users";
+            }
+            else {
+                alert("No se puede eliminar el registro");
+            }
+        }
+    });
+}
