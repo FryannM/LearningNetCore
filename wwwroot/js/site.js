@@ -80,7 +80,7 @@ function getRoles(action) {
     });
 }
 function EditUser(action) {
-    debugger;
+  
     id = $('input[name=id]')[0].value;
     email = $('input[name=email]')[0].value;
     phoneNumber = $('input[name=PhoneNumber]')[0].value;
@@ -150,16 +150,19 @@ function DeleteUsers(action) {
 }
 
 function CreateUser(action) {
+
+    debugger;
+
     // Obteniendo Datos
     email = $('input[name=emailNew]')[0].value;
     phoneNumber = $('input[name =PhoneNumberNew]')[0].value;
-    passwordHash = $('input[name=passwordHasnew]')[0].value;
+    passwordHash = $('input[name=passwordHashnew]')[0].value;
     role = document.getElementById('SelectNew');
     selectRole = role.options[role.selectedIndex].text;
-     
 
 
-    if (email = "") {
+
+    if (email == "") {
         $('#emailNew').focus();
         alert("Email cant be Empty");
     }
@@ -169,20 +172,28 @@ function CreateUser(action) {
             alert("Password cant be Empty")
         }
         else {
+
             $.ajax({
                 type: "POST",
                 url: action,
                 data: {
-                    email, phoneNumber, passwordHash, role, selectRole
+                    id,userName , email, phoneNumber,
+                    accessFailedCount,
+                    concurrencyStamp, emailConfirmed,
+                    lockoutEnabled, lockoutEnd,
+                    normalizedEmail, normalizedUserName,
+                    passwordHash, phoneNumberConfirmed,
+                    securityStamp,
+                    twoFactorEnabled,
+                    selectRole
                 },
                 success: function (response) {
-
                     if (response == "Save") {
 
-                        window.location.href = "Users"
+                          window.location.href = "Users";
                     }
                     else {
-                        $('#MessageNew').html("Error, has Ocurrer");
+                        $('#MessageNew').html("Error, User Duplicate");
                     }
                 }
             });

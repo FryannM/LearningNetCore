@@ -20,9 +20,9 @@ namespace SistemaAC.Controllers
 
         public List<SelectListItem> usuarioRole;
 
-        public UsersController(ApplicationDbContext context, 
+        public UsersController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
-            RoleManager<IdentityRole>roleManager)
+            RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
@@ -36,7 +36,7 @@ namespace SistemaAC.Controllers
         {
             var ID = "";
 
-             //declarando un obj list de la clase Usuario
+            //declarando un obj list de la clase Usuario
             List<Users> user = new List<Users>();
 
             //Obteniendo todos los registro de la tabla donde almaceno los usuarios
@@ -61,7 +61,7 @@ namespace SistemaAC.Controllers
             }
 
             return View(user.ToList());
-          //  return View(await _context.ApplicationUser.ToListAsync());
+            //  return View(await _context.ApplicationUser.ToListAsync());
         }
         public async Task<List<Users>> getUser(string id)
         {
@@ -72,7 +72,7 @@ namespace SistemaAC.Controllers
             usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, id);
             user.Add(new Users()
             {
-                Id =appUser.Id,
+                Id = appUser.Id,
                 UserName = appUser.UserName,
                 Email = appUser.Email,
                 Role = usuarioRole[0].Text,
@@ -90,20 +90,17 @@ namespace SistemaAC.Controllers
                 SecurityStamp = appUser.SecurityStamp,
                 TwoFactorEnabled = appUser.TwoFactorEnabled
             });
-           
+
             return user;
         }
 
-        public async Task<List<SelectListItem>>GetRoles ()
+        public async Task<List<SelectListItem>> GetRoles()
         {
             //creamos un obj llamado rolesLista
             List<SelectListItem> rolesLista = new List<SelectListItem>();
 
             return rolesLista;
         }
-
-
-
         public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
          string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
           string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
@@ -129,7 +126,7 @@ namespace SistemaAC.Controllers
                     PhoneNumberConfirmed = phoneNumberConfirmed,
                     SecurityStamp = securityStamp,
                     TwoFactorEnabled = twoFactorEnabled
-                    
+
                     //Actualizando datos
                 };
                 _context.Update(applicationUser);
@@ -137,11 +134,11 @@ namespace SistemaAC.Controllers
                 var user = await _userManager.FindByIdAsync(id);
                 usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, id);
 
-                 if ( usuarioRole[0].Text !="No Role")
+                if (usuarioRole[0].Text != "No Role")
                 {
                     await _userManager.RemoveFromRoleAsync(user, usuarioRole[0].Text);
                 }
-                  if ( selectRole == "No Role")
+                if (selectRole == "No Role")
                 {
                     selectRole = "Usuario";
                 }
@@ -158,13 +155,12 @@ namespace SistemaAC.Controllers
             return resp;
         }
 
-
-         public async Task<String> DeleteUsers(string id)
+        public async Task<String> DeleteUsers(string id)
         {
             var message = "";
             try
             {
-                var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id== id);
+                var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
                 _context.ApplicationUser.Remove(applicationUser);
                 await _context.SaveChangesAsync();
                 message = "Delete";
@@ -172,49 +168,49 @@ namespace SistemaAC.Controllers
             catch (Exception)
             {
                 message = "Fail";
-                
+
             }
-
             return message;
-
         }
 
         public async Task<String> CreateUser(
+            string id,
             string email,
+            string userName,
             string phoneNumber,
             string passwordHash,
             string selectRole, ApplicationUser applicationUser)
         {
 
             var res = "";
+            selectRole = "ROl";
+
 
             applicationUser = new ApplicationUser
             {
+
                 UserName = email,
                 Email = email,
                 PhoneNumber = phoneNumber,
             };
             var result = await _userManager.CreateAsync(applicationUser, passwordHash);
 
+
             if (result.Succeeded)
             {
-                await _userManager.AddToRoleAsync(applicationUser,  selectRole);
+                await _userManager.AddToRoleAsync(applicationUser, selectRole);
                 res = "Save";
             }
             else
             {
-                res = "No Save";
+                result.Errors.ToString();
             }
-        
             return res;
-
         }
 
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);
         }
-
-      
     }
 }
