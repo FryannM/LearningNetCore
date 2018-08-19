@@ -179,9 +179,42 @@ namespace SistemaAC.Controllers
 
         }
 
+        public async Task<String> CreateUser(
+            string email,
+            string phoneNumber,
+            string passwordHash,
+            string selectRole, ApplicationUser applicationUser)
+        {
+
+            var res = "";
+
+            applicationUser = new ApplicationUser
+            {
+                UserName = email,
+                Email = email,
+                PhoneNumber = phoneNumber,
+            };
+            var result = await _userManager.CreateAsync(applicationUser, passwordHash);
+
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(applicationUser,  selectRole);
+                res = "Save";
+            }
+            else
+            {
+                res = "No Save";
+            }
+        
+            return res;
+
+        }
+
         private bool ApplicationUserExists(string id)
         {
             return _context.ApplicationUser.Any(e => e.Id == id);
         }
+
+      
     }
 }

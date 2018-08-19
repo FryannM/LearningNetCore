@@ -32,6 +32,7 @@ var passwordHash;
 var phoneNumberConfirmed;
 var securityStamp;
 var twoFactorEnabled;
+var selectRole;
 
 
 function ShowUser(reponse) {
@@ -71,6 +72,7 @@ function getRoles(action) {
             if (f == 0) {
                 for (var i = 0; i < response.lenght; i++) {
                     document.getElementById('Select').options[i].Option(response[i].Text, response[i].value);
+                    document.getElementById('SelectNew').options[i].Option(response[i].Text, response[i].value);
                 }
             }
             f = 1;
@@ -108,9 +110,12 @@ function EditUser(action) {
             securityStamp, twoFactorEnabled
 
         },
-         success: function (response) {
+        success: function (response) {
+            debugger;
              if (response = "Save") {
                  window.location.href = "Users"
+                  
+
              }
              else {
                  alert("No se pueden Editar los Datos del Usuario");
@@ -127,7 +132,6 @@ function hideDetailUser() {
 
 
 function DeleteUsers(action) {
-    debugger;
 
     id = $('input[name=id]')[0].value;
     $.ajax({
@@ -143,4 +147,45 @@ function DeleteUsers(action) {
             }
         }
     });
+}
+
+function CreateUser(action) {
+    // Obteniendo Datos
+    email = $('input[name=emailNew]')[0].value;
+    phoneNumber = $('input[name =PhoneNumberNew]')[0].value;
+    passwordHash = $('input[name=passwordHasnew]')[0].value;
+    role = document.getElementById('SelectNew');
+    selectRole = role.options[role.selectedIndex].text;
+     
+
+
+    if (email = "") {
+        $('#emailNew').focus();
+        alert("Email cant be Empty");
+    }
+    else {
+        if (passwordHash == "") {
+            $('#passwordHashnew').focus();
+            alert("Password cant be Empty")
+        }
+        else {
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: {
+                    email, phoneNumber, passwordHash, role, selectRole
+                },
+                success: function (response) {
+
+                    if (response == "Save") {
+
+                        window.location.href = "Users"
+                    }
+                    else {
+                        $('#MessageNew').html("Error, has Ocurrer");
+                    }
+                }
+            });
+        }
+    }
 }

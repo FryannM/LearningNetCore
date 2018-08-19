@@ -153,3 +153,48 @@
         </div>
     </div>
 </div>
+
+
+<div class="modal fade" id="modalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Users</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="Roles" class="control-label">Roles</label>
+                        <select id="SelectNew" name="SelectNew" class="form-control" onclick="getRoles('Users/GetRoles')">
+                            <option value="0">Seleccione un Rol </option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailNew" class="control-label">Email</label>
+                        <input for="emailNew" name="emailNew" id="emailNew" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumberNew" class="control-label">PhoneNumber</label>
+                        <input name="PhoneNumberNew" id="PhoneNumberNew" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="control-label">Password</label>
+                        <input  type="password"name="passwordHashnew" id="passwordHashnew" class="form-control" />
+                    </div>
+
+                    <div class=" form-group">
+                        <p id="MessageNew">
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success" onclick="CreateUser('Users/CreateUser')">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
