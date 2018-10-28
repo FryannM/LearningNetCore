@@ -15,4 +15,4 @@ namespace SistemaAC.Models
         public Boolean Estado { get; set; } = true;
         public ICollection<Curso> Cursos { get; set; }
     }
-}
+}                      

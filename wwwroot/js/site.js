@@ -33,6 +33,7 @@ var phoneNumberConfirmed;
 var securityStamp;
 var twoFactorEnabled;
 var selectRole;
+var SelectEstado;
 
 
 function ShowUser(reponse) {
@@ -199,4 +200,19 @@ function CreateUser(action) {
             });
         }
     }
+}
+
+var AddCategoria = () => {
+
+    var nombre = document.getElementById("Nombre").value;
+    var descripcion = document.getElementById("Descripcion").value;
+    var estado = document.getElementById("Estado").value;
+    //SelectEstado = estado.options[estado.selectedIndex].text;
+    var action = 'Categorias/Create';
+    var categoria = new Categorias(nombre, descripcion, estado, action);
+    categoria.AddCategoria();
+
+
+
+
 }

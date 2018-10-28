@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    <a data-toggle="modal" data-target="#modalAc" class="btn btn-info">Crear Categoria</a>
+    <a data-toggle="modal" data-target="#modalAc" class="btn btn-info">Crear Categoria </a>
     @*<a asp-action="Create">Create New</a>*@
 </p>
 <table class="table">
@@ -52,8 +52,9 @@
     <div class=" modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="btn btn-primary" data-dismiss="modal" aria-labelledby="Close">
+                <button type="button" class="close" data-dismiss="modal" aria-labelledby="Close">
                     <span aria-hidden="true">&times;</span></button>
+
                 <h4 class="modal-title" id="myModallabel">Agregar Categoria</h4>
             </div>
             <div class="modal-body">
@@ -68,7 +69,7 @@
                         <div class="form-group">
                             <label for="Descripcion" class="col-md-2 control-label">Descripcion</label>
                             <div class="col-md-10">
-                                <input for="Descripcion" id="Nombre" placeholder="Descripcion" name="Descripcion" class="form-control" />
+                                <input for="Descripcion" id="Descripcion" placeholder="Descripcion" name="Descripcion" class="form-control" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -87,7 +88,7 @@
             </div>
             <div class="modal-footer" >
                 <button type="button" class="btn  btn-default" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn  btn-primary">Save Changes</button>
+                <button type="button" class="btn  btn-primary  " onclick="AddCategoria()">Save Changes</button>
             </div>
         </div>
     </div>
