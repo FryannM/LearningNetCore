@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaAC.Data;
+using SistemaAC.ModelClass;
 using SistemaAC.Models;
 
 namespace SistemaAC.Controllers
@@ -13,10 +15,16 @@ namespace SistemaAC.Controllers
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly CategoriaModels _categoriaModels;
+        // en caso de no funcionar ,saca el obj Categoria del constructor  y solo  inicianizalo
+        // en el constructor
 
         public CategoriasController(ApplicationDbContext context)
         {
             _context = context;
+            _categoriaModels = new CategoriaModels(_context);
+
+
         }
 
         // GET: Categorias
@@ -43,6 +51,16 @@ namespace SistemaAC.Controllers
             return View(categoria);
         }
 
+
+
+         public  List<IdentityError>SaveCategoria(CategoriaModels vm)
+        {
+
+           return _categoriaModels.SaveCategoria(vm);
+
+
+           
+        }
         // GET: Categorias/Create
         public IActionResult Create()
         {

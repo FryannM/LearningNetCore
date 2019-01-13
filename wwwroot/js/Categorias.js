@@ -36,9 +36,7 @@ class Categorias {
                             nombre,descripcion, estado
                         },
                         success: (response) => {
-
-                            debugger;
-
+                            console.log(response);
                         }
                     });
                 }
@@ -46,3 +44,4 @@ class Categorias {
         }
     }
 }
+  
