@@ -23,8 +23,6 @@ namespace SistemaAC.Controllers
         {
             _context = context;
             _categoriaModels = new CategoriaModels(_context);
-
-
         }
 
         // GET: Categorias
@@ -50,8 +48,6 @@ namespace SistemaAC.Controllers
 
             return View(categoria);
         }
-
-
 
          public  List<IdentityError>SaveCategoria(CategoriaModels vm)
         {
