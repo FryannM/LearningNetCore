@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SistemaAC.Data;
+using SistemaAC.ModelClass;
 using SistemaAC.Models;
 
 namespace SistemaAC.Controllers
@@ -101,49 +102,47 @@ namespace SistemaAC.Controllers
 
             return rolesLista;
         }
-        public async Task<string> EditUsers(string id, string userName, string email, string phoneNumber, int accessFailedCount,
-         string concurrencyStamp, bool emailConfirmed, bool lockoutEnabled, DateTimeOffset lockoutEnd,
-          string normalizedEmail, string normalizedUserName, string passwordHash, bool phoneNumberConfirmed,
-         string securityStamp, bool twoFactorEnabled, string selectRole, ApplicationUser applicationUser)
+        public async Task<string> EditUsers( UserViewModels vm)
         {
+            
             var resp = "";
             try
             {
-                applicationUser = new ApplicationUser
+               var  applicationUser = new ApplicationUser
                 {
-                    Id = id,
-                    UserName = userName,
-                    Email = email,
-                    PhoneNumber = phoneNumber,
-                    AccessFailedCount = accessFailedCount,
-                    ConcurrencyStamp = concurrencyStamp,
-                    EmailConfirmed = emailConfirmed,
-                    LockoutEnabled = lockoutEnabled,
-                    LockoutEnd = lockoutEnd,
-                    NormalizedEmail = normalizedEmail,
-                    NormalizedUserName = normalizedUserName,
-                    PasswordHash = passwordHash,
-                    PhoneNumberConfirmed = phoneNumberConfirmed,
-                    SecurityStamp = securityStamp,
-                    TwoFactorEnabled = twoFactorEnabled
+                    Id = vm.id,
+                    UserName = vm.userName,
+                    Email = vm.email,
+                    PhoneNumber = vm.phoneNumber,
+                    AccessFailedCount = vm.accessFailedCount,
+                    ConcurrencyStamp = vm.concurrencyStamp,
+                    EmailConfirmed = vm.emailConfirmed,
+                    LockoutEnabled = vm.lockoutEnabled,
+                    LockoutEnd = vm.lockoutEnd,
+                    NormalizedEmail = vm.normalizedEmail,
+                    NormalizedUserName = vm.normalizedUserName,
+                    PasswordHash = vm.passwordHash,
+                    PhoneNumberConfirmed = vm.phoneNumberConfirmed,
+                    SecurityStamp = vm.securityStamp,
+                    TwoFactorEnabled = vm.twoFactorEnabled
 
                     //Actualizando datos
                 };
                 _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
-                var user = await _userManager.FindByIdAsync(id);
-                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, id);
+                var user = await _userManager.FindByIdAsync(vm.id);
+                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager,vm.id);
 
                 if (usuarioRole[0].Text != "No Role")
                 {
                     await _userManager.RemoveFromRoleAsync(user, usuarioRole[0].Text);
                 }
-                if (selectRole == "No Role")
+                if (vm.selectRole == "No Role")
                 {
-                    selectRole = "Usuario";
+                    vm.selectRole = "Usuario";
                 }
 
-                var resultado = await _userManager.AddToRoleAsync(user, selectRole);
+                var resultado = await _userManager.AddToRoleAsync(user, vm.selectRole);
 
                 resp = "Save";
             }

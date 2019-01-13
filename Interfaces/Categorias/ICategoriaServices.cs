@@ -9,9 +9,7 @@ using System.Threading.Tasks;
 namespace SistemaAC.Interfaces.Categorias
 {
     interface ICategoriaServices
-    {
-
-       
+    {    
         List<IdentityError> SaveCategoria(CategoriaViewModel vm);
     }
 }
