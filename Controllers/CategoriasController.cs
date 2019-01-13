@@ -9,20 +9,23 @@ using Microsoft.EntityFrameworkCore;
 using SistemaAC.Data;
 using SistemaAC.ModelClass;
 using SistemaAC.Models;
+using SistemaAC.Services;
 
 namespace SistemaAC.Controllers
 {
     public class CategoriasController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly CategoriaModels _categoriaModels;
+        private readonly CategoriaServices _categoriservices;
+        private readonly CategoriaModels _example;
         // en caso de no funcionar ,saca el obj Categoria del constructor  y solo  inicianizalo
         // en el constructor
 
         public CategoriasController(ApplicationDbContext context)
         {
             _context = context;
-            _categoriaModels = new CategoriaModels(_context);
+            _categoriservices = new CategoriaServices(_context);
+            _example = new CategoriaModels(_context);
         }
 
         // GET: Categorias
@@ -52,8 +55,8 @@ namespace SistemaAC.Controllers
          public  List<IdentityError>SaveCategoria(CategoriaModels vm)
         {
 
-           return _categoriaModels.SaveCategoria(vm);
-// probando los pull requests  a  ver si funciona
+           return _example.SaveCategoria(vm);
+
         }
         // GET: Categorias/Create
         public IActionResult Create()

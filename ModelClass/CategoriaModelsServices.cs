@@ -41,8 +41,8 @@ namespace SistemaAC.ModelClass
 
             errorList.Add(new IdentityError
             {
-                Code = "Save",
-                Description = "Save"
+                Code = "120",
+                Description = "No Save"
             });
             return errorList;
         }
