@@ -2,6 +2,7 @@
 using SistemaAC.Data;
 using SistemaAC.Interfaces.Categorias;
 using SistemaAC.ModelClass;
+using SistemaAC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,12 +24,12 @@ namespace SistemaAC.Services
 
             var errorList = new List<IdentityError>();
 
-            var categoria = new CategoriaViewModel
+            var categoria = new Categoria
             {
                
-                nombre = vm.nombre,
-                descripcion = vm.descripcion,
-                estado = Convert.ToBoolean(vm.estado),
+                Nombre = vm.nombre,
+                Descripcion = vm.descripcion,
+                Estado = Convert.ToBoolean(vm.estado),
             };
             context.Add(categoria);
 

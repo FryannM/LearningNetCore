@@ -7,9 +7,9 @@ namespace SistemaAC.ModelClass
 {
     public class CategoriaViewModel
     {
-        public virtual string  nombre { get; set; }
-        public virtual string descripcion { get; set; }
-        public virtual bool estado { get; set; }
+        public  string  nombre { get; set; }
+        public  string descripcion { get; set; }
+        public  bool estado { get; set; }
 
     }
 }
