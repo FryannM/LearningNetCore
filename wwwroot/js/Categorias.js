@@ -9,7 +9,7 @@ class Categorias {
     }
 
     AddCategoria() {
-
+        debugger;
         if (this.nombre === "") {
             document.getElementById('Nombre').focus();
         }
@@ -20,22 +20,22 @@ class Categorias {
             else {
                 if (this.estado === "0") {
                     document.getElementById('Mensaje').innerHTML = "Selecione un Estado";
-                }
-                else {
+                } else {
                     var nombre = this.nombre;
                     var descripcion = this.descripcion;
                     var estado = this.estado;
                     var action = this.action;
                     var mensaje = '';
-
-
+                    debugger;
                     $.ajax({
                         type: "POST",
                         url: action,
                         data: {
                             nombre,descripcion, estado
                         },
+                        
                         success: (response) => {
+                            debugger;
                             console.log(response);
                         }
                     });

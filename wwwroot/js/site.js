@@ -208,7 +208,7 @@ var AddCategoria = () => {
     var descripcion = document.getElementById("Descripcion").value;
     var estado = document.getElementById("Estado").value;
     //SelectEstado = estado.options[estado.selectedIndex].text;
-    var action = 'Categorias/Create';
+    var action = 'Categorias/SaveCategoria';
     var categoria = new Categorias(nombre, descripcion, estado, action);
     categoria.AddCategoria();
 

@@ -25,6 +25,7 @@ namespace SistemaAC.Services
 
             var categoria = new CategoriaViewModel
             {
+               
                 nombre = vm.nombre,
                 descripcion = vm.descripcion,
                 estado = Convert.ToBoolean(vm.estado),
