@@ -1,26 +1,54 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using SistemaAC.Data;
-using SistemaAC.ModelClass;
-using SistemaAC.Models;
-
-namespace SistemaAC.Controllers
+﻿namespace SistemaAC.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.Rendering;
+    using Microsoft.EntityFrameworkCore;
+    using SistemaAC.Data;
+    using SistemaAC.Data_Transfer_Object.UserDto;
+    using SistemaAC.ModelClass;
+    using SistemaAC.Models;
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Defines the <see cref="UsersController" />
+    /// </summary>
     public class UsersController : Controller
     {
+        /// <summary>
+        /// Defines the _context
+        /// </summary>
         private readonly ApplicationDbContext _context;
-        UserManager<ApplicationUser> _userManager;
-        RoleManager<IdentityRole> _roleManager;
-        UsersRole _usersRole;
 
+        /// <summary>
+        /// Defines the _userManager
+        /// </summary>
+        internal UserManager<ApplicationUser> _userManager;
+
+        /// <summary>
+        /// Defines the _roleManager
+        /// </summary>
+        internal RoleManager<IdentityRole> _roleManager;
+
+        /// <summary>
+        /// Defines the _usersRole
+        /// </summary>
+        internal UsersRole _usersRole;
+
+        /// <summary>
+        /// Defines the usuarioRole
+        /// </summary>
         public List<SelectListItem> usuarioRole;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UsersController"/> class.
+        /// </summary>
+        /// <param name="context">The context<see cref="ApplicationDbContext"/></param>
+        /// <param name="userManager">The userManager<see cref="UserManager{ApplicationUser}"/></param>
+        /// <param name="roleManager">The roleManager<see cref="RoleManager{IdentityRole}"/></param>
         public UsersController(ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole> roleManager)
@@ -33,6 +61,10 @@ namespace SistemaAC.Controllers
         }
 
         // GET: Users
+        /// <summary>
+        /// The Index
+        /// </summary>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Index()
         {
             var ID = "";
@@ -62,8 +94,13 @@ namespace SistemaAC.Controllers
             }
 
             return View(user.ToList());
-            //  return View(await _context.ApplicationUser.ToListAsync());
         }
+
+        /// <summary>
+        /// The getUser
+        /// </summary>
+        /// <param name="id">The id<see cref="string"/></param>
+        /// <returns>The <see cref="Task{List{Users}}"/></returns>
         public async Task<List<Users>> getUser(string id)
         {
             List<Users> user = new List<Users>();
@@ -95,6 +132,10 @@ namespace SistemaAC.Controllers
             return user;
         }
 
+        /// <summary>
+        /// The GetRoles
+        /// </summary>
+        /// <returns>The <see cref="Task{List{SelectListItem}}"/></returns>
         public async Task<List<SelectListItem>> GetRoles()
         {
             //creamos un obj llamado rolesLista
@@ -102,13 +143,18 @@ namespace SistemaAC.Controllers
 
             return rolesLista;
         }
-        public async Task<string> EditUsers( UserViewModels vm)
+
+        /// <summary>
+        /// The EditUsers
+        /// </summary>
+        /// <param name="vm">The vm<see cref="UserViewModels"/></param>
+        /// <returns>The <see cref="Task{string}"/></returns>
+        public async Task<string> EditUsers(UserViewModels vm)
         {
-            
+
             var resp = "";
-            try
-            {
-               var  applicationUser = new ApplicationUser
+            try {
+                var applicationUser = new ApplicationUser
                 {
                     Id = vm.id,
                     UserName = vm.userName,
@@ -131,84 +177,75 @@ namespace SistemaAC.Controllers
                 _context.Update(applicationUser);
                 await _context.SaveChangesAsync();
                 var user = await _userManager.FindByIdAsync(vm.id);
-                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager,vm.id);
+                usuarioRole = await _usersRole.GetRole(_userManager, _roleManager, vm.id);
 
-                if (usuarioRole[0].Text != "No Role")
-                {
+                if (usuarioRole[0].Text != "No Role") {
                     await _userManager.RemoveFromRoleAsync(user, usuarioRole[0].Text);
                 }
-                if (vm.selectRole == "No Role")
-                {
+                if (vm.selectRole == "No Role") {
                     vm.selectRole = "Usuario";
                 }
-
                 var resultado = await _userManager.AddToRoleAsync(user, vm.selectRole);
 
                 resp = "Save";
             }
-            catch (Exception)
-            {
-
+            catch (Exception) {
                 resp = "No Save";
             }
             return resp;
         }
 
+        /// <summary>
+        /// The DeleteUsers
+        /// </summary>
+        /// <param name="id">The id<see cref="string"/></param>
+        /// <returns>The <see cref="Task{String}"/></returns>
         public async Task<String> DeleteUsers(string id)
         {
             var message = "";
-            try
-            {
+            try {
                 var applicationUser = await _context.ApplicationUser.SingleOrDefaultAsync(m => m.Id == id);
                 _context.ApplicationUser.Remove(applicationUser);
                 await _context.SaveChangesAsync();
                 message = "Delete";
-            }
-            catch (Exception)
-            {
+            } catch (Exception) {
                 message = "Fail";
-
             }
             return message;
         }
 
-        public async Task<String> CreateUser(
-            string id,
-            string email,
-            string userName,
-            string phoneNumber,
-            string passwordHash,
-            string selectRole, ApplicationUser applicationUser)
-        {
-
+        /// <summary>
+        /// The CreateUser
+        /// </summary>
+        /// <param name="user">The user<see cref="UserDto"/></param>
+        /// <returns>The <see cref="Task{String}"/></returns>
+        public async Task<String> CreateUser(UserDto user) {
             var res = "";
-            selectRole = "ROl";
-
-
-            applicationUser = new ApplicationUser
+            user.selectRole = "ROl";
+            var applicationUser = new ApplicationUser
             {
-
-                UserName = email,
-                Email = email,
-                PhoneNumber = phoneNumber,
+                UserName = user.email,
+                Email = user.email,
+                PhoneNumber = user.phoneNumber,
             };
-            var result = await _userManager.CreateAsync(applicationUser, passwordHash);
+            var result = await _userManager.CreateAsync(user.applicationUser, user.passwordHash);
 
-
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(applicationUser, selectRole);
+            if (result.Succeeded) {
+                await _userManager.AddToRoleAsync(user.applicationUser, user.selectRole);
                 res = "Save";
             }
-            else
-            {
+            else {
                 result.Errors.ToString();
             }
             return res;
         }
 
-        private bool ApplicationUserExists(string id)
-        {
+        /// <summary>
+        /// The ApplicationUserExists
+        /// </summary>
+        /// <param name="id">The id<see cref="string"/></param>
+        /// <returns>The <see cref="bool"/></returns>
+        private bool ApplicationUserExists(string id) {
             return _context.ApplicationUser.Any(e => e.Id == id);
         }
     }
