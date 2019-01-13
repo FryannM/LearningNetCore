@@ -1,40 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using SistemaAC.Data;
-using SistemaAC.ModelClass;
-using SistemaAC.Models;
-using SistemaAC.Services;
-
-namespace SistemaAC.Controllers
+﻿namespace SistemaAC.Controllers
 {
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using SistemaAC.Data;
+    using SistemaAC.ModelClass;
+    using SistemaAC.Models;
+    using SistemaAC.Services;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    /// <summary>
+    /// Defines the <see cref="CategoriasController" />
+    /// </summary>
     public class CategoriasController : Controller
     {
+        /// <summary>
+        /// Defines the _context
+        /// </summary>
         private readonly ApplicationDbContext _context;
+
+        /// <summary>
+        /// Defines the _categoriservices
+        /// </summary>
         private readonly CategoriaServices _categoriservices;
-      
+
         // en caso de no funcionar ,saca el obj Categoria del constructor  y solo  inicianizalo
         // en el constructor
-
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CategoriasController"/> class.
+        /// </summary>
+        /// <param name="context">The context<see cref="ApplicationDbContext"/></param>
         public CategoriasController(ApplicationDbContext context)
         {
             _context = context;
             _categoriservices = new CategoriaServices(_context);
-           
         }
 
         // GET: Categorias
+        /// <summary>
+        /// The Index
+        /// </summary>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categoria.ToListAsync());
         }
 
         // GET: Categorias/Details/5
+        /// <summary>
+        /// The Details
+        /// </summary>
+        /// <param name="id">The id<see cref="int?"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,13 +71,22 @@ namespace SistemaAC.Controllers
             return View(categoria);
         }
 
-         public  List<IdentityError>SaveCategoria(CategoriaViewModel vm)
+        /// <summary>
+        /// The SaveCategoria
+        /// </summary>
+        /// <param name="vm">The vm<see cref="CategoriaViewModel"/></param>
+        /// <returns>The <see cref="List{IdentityError}"/></returns>
+        public List<IdentityError> SaveCategoria(CategoriaViewModel vm)
         {
 
-           return _categoriservices.SaveCategoria(vm);
-
+            return _categoriservices.SaveCategoria(vm);
         }
+
         // GET: Categorias/Create
+        /// <summary>
+        /// The Create
+        /// </summary>
+        /// <returns>The <see cref="IActionResult"/></returns>
         public IActionResult Create()
         {
             return View();
@@ -67,6 +95,11 @@ namespace SistemaAC.Controllers
         // POST: Categorias/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// The Create
+        /// </summary>
+        /// <param name="categoria">The categoria<see cref="Categoria"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CatagoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
@@ -81,6 +114,11 @@ namespace SistemaAC.Controllers
         }
 
         // GET: Categorias/Edit/5
+        /// <summary>
+        /// The Edit
+        /// </summary>
+        /// <param name="id">The id<see cref="int?"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -99,6 +137,12 @@ namespace SistemaAC.Controllers
         // POST: Categorias/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
+        /// <summary>
+        /// The Edit
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <param name="categoria">The categoria<see cref="Categoria"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CatagoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
@@ -132,6 +176,11 @@ namespace SistemaAC.Controllers
         }
 
         // GET: Categorias/Delete/5
+        /// <summary>
+        /// The Delete
+        /// </summary>
+        /// <param name="id">The id<see cref="int?"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -150,6 +199,11 @@ namespace SistemaAC.Controllers
         }
 
         // POST: Categorias/Delete/5
+        /// <summary>
+        /// The DeleteConfirmed
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -160,10 +214,14 @@ namespace SistemaAC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        /// <summary>
+        /// The CategoriaExists
+        /// </summary>
+        /// <param name="id">The id<see cref="int"/></param>
+        /// <returns>The <see cref="bool"/></returns>
         private bool CategoriaExists(int id)
         {
             return _context.Categoria.Any(e => e.CatagoriaID == id);
         }
     }
 }
- 
