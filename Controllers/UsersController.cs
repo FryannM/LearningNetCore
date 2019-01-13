@@ -228,7 +228,7 @@
                 Email = user.email,
                 PhoneNumber = user.phoneNumber,
             };
-            var result = await _userManager.CreateAsync(user.applicationUser, user.passwordHash);
+            var result = await _userManager.CreateAsync(applicationUser, user.passwordHash);
 
             if (result.Succeeded) {
                 await _userManager.AddToRoleAsync(user.applicationUser, user.selectRole);
