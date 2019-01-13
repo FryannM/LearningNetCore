@@ -10,15 +10,15 @@ class Categorias {
 
     AddCategoria() {
 
-        if (this.nombre == "") {
+        if (this.nombre === "") {
             document.getElementById('Nombre').focus();
         }
         else {
-            if (this.descripcion == "") {
+            if (this.descripcion === "") {
                 document.getElementById('Descripcion').focus();
             }
             else {
-                if (this.estado == "0") {
+                if (this.estado === "0") {
                     document.getElementById('Mensaje').innerHTML = "Selecione un Estado";
                 }
                 else {
