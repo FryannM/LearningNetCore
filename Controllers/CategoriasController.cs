@@ -17,7 +17,7 @@ namespace SistemaAC.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly CategoriaServices _categoriservices;
-        private readonly CategoriaModels _example;
+      
         // en caso de no funcionar ,saca el obj Categoria del constructor  y solo  inicianizalo
         // en el constructor
 
@@ -25,7 +25,7 @@ namespace SistemaAC.Controllers
         {
             _context = context;
             _categoriservices = new CategoriaServices(_context);
-            _example = new CategoriaModels(_context);
+           
         }
 
         // GET: Categorias
@@ -52,10 +52,10 @@ namespace SistemaAC.Controllers
             return View(categoria);
         }
 
-         public  List<IdentityError>SaveCategoria(CategoriaModels vm)
+         public  List<IdentityError>SaveCategoria(CategoriaViewModel vm)
         {
 
-           return _example.SaveCategoria(vm);
+           return _categoriservices.SaveCategoria(vm);
 
         }
         // GET: Categorias/Create
