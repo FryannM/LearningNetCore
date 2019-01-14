@@ -90,7 +90,6 @@
                     Role = usuarioRole[0].Text
 
                 });
-
             }
 
             return View(user.ToList());
