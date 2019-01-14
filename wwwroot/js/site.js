@@ -70,7 +70,7 @@ function getRoles(action) {
         url: action,
         data: {},
         success: function (response) {
-            if (f == 0) {
+            if (f === 0) {
                 for (var i = 0; i < response.lenght; i++) {
                     document.getElementById('Select').options[i].Option(response[i].Text, response[i].value);
                     document.getElementById('SelectNew').options[i].Option(response[i].Text, response[i].value);
@@ -112,9 +112,9 @@ function EditUser(action) {
 
         },
         success: function (response) {
-            debugger;
-             if (response = "Save") {
-                 window.location.href = "Users"
+       
+             if (response === "Save") {
+                 window.location.href = "Users";
                   
 
              }
@@ -152,7 +152,6 @@ function DeleteUsers(action) {
 
 function CreateUser(action) {
 
-    debugger;
 
     // Obteniendo Datos
     email = $('input[name=emailNew]')[0].value;
@@ -163,14 +162,14 @@ function CreateUser(action) {
 
 
 
-    if (email == "") {
+    if (email === "") {
         $('#emailNew').focus();
         alert("Email cant be Empty");
     }
     else {
-        if (passwordHash == "") {
+        if (passwordHash === "") {
             $('#passwordHashnew').focus();
-            alert("Password cant be Empty")
+            alert("Password cant be Empty");
         }
         else {
 
@@ -189,7 +188,7 @@ function CreateUser(action) {
                     selectRole
                 },
                 success: function (response) {
-                    if (response == "Save") {
+                    if (response === "Save") {
 
                           window.location.href = "Users";
                     }

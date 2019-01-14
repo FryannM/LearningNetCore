@@ -9,7 +9,7 @@ class Categorias {
     }
 
     AddCategoria() {
-        debugger;
+
         if (this.nombre === "") {
             document.getElementById('Nombre').focus();
         }
@@ -26,7 +26,7 @@ class Categorias {
                     var estado = this.estado;
                     var action = this.action;
                     var mensaje = '';
-                    debugger;
+                    
                     $.ajax({
                         type: "POST",
                         url: action,
@@ -35,13 +35,29 @@ class Categorias {
                         },
                         
                         success: (response) => {
-                            debugger;
-                            console.log(response);
+                            $.each(response, (index, val) => {
+                                mensaje = val.code;
+                            });
+                            if (mensaje === "8") {
+                                this.restablecer();
+                                mensaje = "Guardado con Existo";
+                            } else {
+                                document.getElementById("mensaje").innerHTML = "No se puede Guardar la Categoria";
+
+                            }
                         }
                     });
                 }
             }
+          
         }
+    }
+    restablecer() {
+        document.getElementById("Nombre").value = "";
+        document.getElementById("Descripcion").value = "";
+        document.getElementById("Mensaje").innerHTML = "";
+        document.getElementById("Estado").selectedIndex = 0;
+        $('#modalAc').modal('hide');
     }
 }
   

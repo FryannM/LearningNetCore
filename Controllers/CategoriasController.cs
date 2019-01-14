@@ -38,11 +38,7 @@
             _categoriservices = new CategoriaServices(_context);
         }
 
-        // GET: Categorias
-        /// <summary>
-        /// The Index
-        /// </summary>
-        /// <returns>The <see cref="Task{IActionResult}"/></returns>
+     
         public async Task<IActionResult> Index()
         {
             return View(await _context.Categoria.ToListAsync());
@@ -78,41 +74,11 @@
         /// <returns>The <see cref="List{IdentityError}"/></returns>
         public List<IdentityError> SaveCategoria(CategoriaViewModel vm)
         {
-
             return _categoriservices.SaveCategoria(vm);
         }
 
-        // GET: Categorias/Create
-        /// <summary>
-        /// The Create
-        /// </summary>
-        /// <returns>The <see cref="IActionResult"/></returns>
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Categorias/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /// <summary>
-        /// The Create
-        /// </summary>
-        /// <param name="categoria">The categoria<see cref="Categoria"/></param>
-        /// <returns>The <see cref="Task{IActionResult}"/></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CatagoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(categoria);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(categoria);
-        }
-
+      
+       
         // GET: Categorias/Edit/5
         /// <summary>
         /// The Edit
@@ -134,15 +100,6 @@
             return View(categoria);
         }
 
-        // POST: Categorias/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        /// <summary>
-        /// The Edit
-        /// </summary>
-        /// <param name="id">The id<see cref="int"/></param>
-        /// <param name="categoria">The categoria<see cref="Categoria"/></param>
-        /// <returns>The <see cref="Task{IActionResult}"/></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CatagoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
