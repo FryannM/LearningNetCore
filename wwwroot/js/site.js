@@ -215,7 +215,7 @@ var AddCategoria = () => {
 
 var filtrarDatos = (numPage) => {
     var valor = document.getElementById("filtrar").value;
-    var action = 'Categorias/filtrarDatos';
+    var action = 'Categorias/FilterData';
     var categoria = new Categorias(valor, "", "", action);
     categoria.filtrarDatos(numPage);
 
