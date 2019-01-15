@@ -210,8 +210,13 @@ var AddCategoria = () => {
     var action = 'Categorias/SaveCategoria';
     var categoria = new Categorias(nombre, descripcion, estado, action);
     categoria.AddCategoria();
+}
 
 
+var filtrarDatos = (numPage) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Categorias/filtrarDatos';
+    var categoria = new Categorias(valor, "", "", action);
+    categoria.filtrarDatos(numPage);
 
-
- }
+}

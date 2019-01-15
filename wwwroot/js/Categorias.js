@@ -51,6 +51,7 @@ class Categorias {
             }
           
         }
+      
     }
     restablecer() {
         document.getElementById("Nombre").value = "";
@@ -58,6 +59,26 @@ class Categorias {
         document.getElementById("Mensaje").innerHTML = "";
         document.getElementById("Estado").selectedIndex = 0;
         $('#modalAc').modal('hide');
+   
+    }
+    filtrarDatos(numPage) {
+        var valor = this.nombre;
+        var action = this.action;
+        if (valor === "") {
+            valor === "null";
+        }
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { valor, numPage},
+            success: (response) => {
+                $.each(response, (index, val) => {
+
+                    $("#resultSearch").html(val[0]);
+                    $("#paginado").html(val[1]);
+                });
+            }
+        });
     }
 }
   
