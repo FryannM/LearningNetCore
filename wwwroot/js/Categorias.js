@@ -1,4 +1,5 @@
-﻿  
+﻿
+var localStorage = window.localStorage;
 class Categorias {
 
     constructor(nombre, descripcion, estado, action) {
@@ -74,6 +75,58 @@ class Categorias {
         document.getElementById("Mensaje").innerHTML = "";
         document.getElementById("Estado").selectedIndex = 0;
         $('#modalAc').modal('hide');
+    }
+
+    getCategorias(id) {
+        var action = this.action;
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { id },
+            success: (response) => {
+                if (response[0].response) {
+                    document.getElementById("titleCategoria").innerHTML = "Esta seguro desactivar la  " +
+                        " categoria " + response[0].nombre;
+
+                }
+                else {
+                    document.getElementById("titleCategoria").innerHTML = "Esta seguroo de activar la  " +
+                        " categoria " + response[0].nombre;
+                }
+                console.log(response);
+                localStorage.setItem("categoria", JSON.stringify(response));
+               }
+        });
+    }
+    editar(id, nombre, descripcion, estado, funcion) {
+        var action = this.action;
+        $.ajax({
+            type: "POST",
+            url: action,
+            data:{ id, nombre, descripcion, estado, funcion },
+            success: (response) => {
+                console.log(response);
+                this.restablecer();
+            }
+        });
+
+}
+    editarCategoria(id, funcion) {
+        var nombre = null;
+        var descripcion = null;
+        var estado = null;
+        var action = null;
+        switch (funcion) {
+            case "estado":
+                var response = JSON.parse(localStorage.getItem("categoria"));
+                nombre = response[0].nombre;
+                descripcion = response[0].descripcion;
+                estado = response[0].estado;
+                localStorage.removeItem("categoria");
+                break;
+            default:
+        }
+
     }
 }
   

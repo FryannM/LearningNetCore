@@ -37,7 +37,10 @@
             _context = context;
             _categoriservices = new CategoriaServices(_context);
         }
-
+        public List<Categoria> getCategorias(int id)
+        {
+            return _categoriservices.getCategorias(id);
+        }
 
         public List<object[]> filtrarDatos(int numPagina,string valor)
         {
@@ -104,7 +107,7 @@
             }
             return View(categoria);
         }
-
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("CatagoriaID,Nombre,Descripcion,Estado")] Categoria categoria)
