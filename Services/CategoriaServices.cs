@@ -65,11 +65,12 @@ namespace SistemaAC.Services
             {
                 if (item.Estado == true)
                 {
-                    Estado = "<a class='btn btn-success'>Activo</a>";
+                    Estado = "<a class='label label-success'>Activo</a>";
                 }
                 else
                 {
-                    Estado = "<a class='btn btn-danger'>No activo</a>";
+                    Estado = "<a class='label label-danger'>No activo</a>";
+                    
                 }
                 dataFilter += "<tr>" +
                 "<td>" + item.Nombre + "</td>" +
@@ -80,6 +81,10 @@ namespace SistemaAC.Services
                "<a data-toggle='modal' data-target='#myModal3' class='btn btn-danger' >Delete</a>" +
                "</td>" +
                 "</tr>";
+
+                //var button = '<a href="Edit/' + data + '" id ="btnEditar"  class="btn btn-primary" alt="Editar"> <i class="fa fa-pencil"></i></a> ' +
+                //       '<a href="javascript:;" data-id=' + data + ' id="btnEliminar" class="btn btn-danger" alt="Eliminar"> <i class="fa fa-trash"></i></a>';
+                //return button;
             }
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);
