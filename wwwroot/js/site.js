@@ -200,7 +200,10 @@ function CreateUser(action) {
         }
     }
 }
-
+$().ready(() => {
+    document.getElementById("filtrar").focus();
+    filtrarDatos(1);
+});
 var AddCategoria = () => {
 
     var nombre = document.getElementById("Nombre").value;
@@ -211,7 +214,10 @@ var AddCategoria = () => {
     var categoria = new Categorias(nombre, descripcion, estado, action);
     categoria.AddCategoria();
 
-
-
-
- }
+};
+var filtrarDatos = (numPagina) => {
+    var valor = document.getElementById("filtrar").value;
+    var action = 'Categorias/filtrarDatos';
+    var categoria = new Categorias(valor, "", "", action);
+    categoria.filtrarDatos(numPagina);
+};

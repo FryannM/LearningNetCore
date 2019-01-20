@@ -26,25 +26,22 @@ class Categorias {
                     var estado = this.estado;
                     var action = this.action;
                     var mensaje = '';
-                    
                     $.ajax({
                         type: "POST",
                         url: action,
                         data: {
-                            nombre,descripcion, estado
+                            nombre, descripcion, estado
                         },
-                        
                         success: (response) => {
                             $.each(response, (index, val) => {
                                 mensaje = val.code;
                             });
-                            if (mensaje === "8") {
+                            if (mensaje === "Save") {
                                 this.restablecer();
-                                mensaje = "Guardado con Existo";
                             } else {
-                                document.getElementById("mensaje").innerHTML = "No se puede Guardar la Categoria";
-
+                                document.getElementById("mensaje").innerHTML = "No se puede guardar la categoria";
                             }
+                        //console.log(response);
                         }
                     });
                 }
@@ -52,6 +49,25 @@ class Categorias {
           
         }
     }
+    filtrarDatos(numPagina) {
+        var valor = this.nombre;
+        var action = this.action;
+        if (valor === "") {
+            valor = "null";
+        }
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: { valor, numPagina },
+            success: (response) => {
+                console.log(response);
+                $.each(response, (index, val) => {
+                    $("#resultSearch").html(val[0]);
+                    $("#paginado").html(val[1]);
+                });
+            }
+        });
+    }
     restablecer() {
         document.getElementById("Nombre").value = "";
         document.getElementById("Descripcion").value = "";
