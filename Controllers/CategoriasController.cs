@@ -38,6 +38,11 @@
             _categoriservices = new CategoriaServices(_context);
         }
 
+
+        public List<object[]> filtrarDatos(int numPagina,string valor)
+        {
+            return _categoriservices.filtrarDatos(numPagina, valor);
+        }
      
         public async Task<IActionResult> Index()
         {
