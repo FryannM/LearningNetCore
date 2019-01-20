@@ -43,7 +43,7 @@ namespace SistemaAC.Services
 
         public List<object[]> filtrarDatos(int numPagina, string valor)
         {
-            int count = 0, cant, numRegistros = 0, inicio = 0, reg_por_pagina = 1;
+            int count = 0, cant, numRegistros = 0, inicio = 0, reg_por_pagina = 2;
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
@@ -65,11 +65,13 @@ namespace SistemaAC.Services
             {
                 if (item.Estado == true)
                 {
-                    Estado = "<a class='label label-success'>Activo</a>";
+                    Estado = "<a data-toggle='modal' data-target='#ModalEstado'" +
+                        " onclick='ChangeEstatus(" + item.CatagoriaID + ")' class='label label-success'>Activo</a>";
                 }
                 else
                 {
-                    Estado = "<a class='label label-danger'>No activo</a>";
+                    Estado = "<a data-toggle='modal' data-target='#ModalEstado'" +
+                          " onclick='ChangeEstatus(" + item.CatagoriaID + ")' class='label label-danger'>No activo</a>";
                     
                 }
                 dataFilter += "<tr>" +
@@ -89,6 +91,14 @@ namespace SistemaAC.Services
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);
             return data;
+
+
+             
+        }
+
+         public List<Categoria> getCategorias(int id)
+        {
+            return context.Categoria.Where(c => c.CatagoriaID == id).ToList();
         }
     }
 }

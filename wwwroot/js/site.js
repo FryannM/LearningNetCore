@@ -204,6 +204,7 @@ $().ready(() => {
     document.getElementById("filtrar").focus();
     filtrarDatos(1);
 });
+var idCategoria;
 var AddCategoria = () => {
 
     var nombre = document.getElementById("Nombre").value;
@@ -220,4 +221,19 @@ var filtrarDatos = (numPagina) => {
     var action = 'Categorias/filtrarDatos';
     var categoria = new Categorias(valor, "", "", action);
     categoria.filtrarDatos(numPagina);
+}; 
+
+var ChangeEstatus = (id) => {
+    idCategoria = id;
+    var action = 'Categorias/getCategorias';
+    var categorias = new Categorias("", "", "", action);
+    categorias.getCategorias(id);
+
+
+};
+var editarCategoria = () => {
+    var action = 'Categorias/editarCategorias';
+    var categoria = new Categorias("", "", "", action);
+    categoria.editarCategoria(idCategoria, "estado");
+
 };
