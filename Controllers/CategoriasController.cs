@@ -190,7 +190,7 @@
             return _context.Categoria.Any(e => e.CatagoriaID == id);
         }
 
-        public List<IdentityError> editarCategoria(int id, string nombre, string descripcion,
+        public List<IdentityError> editarCategorias(int id, string nombre, string descripcion,
             Boolean estado, string funcion)
         {
             return  _categoriservices.editarCategoria(id,nombre,descripcion,estado,funcion);

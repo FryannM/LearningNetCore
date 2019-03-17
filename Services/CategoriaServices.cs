@@ -17,7 +17,7 @@ namespace SistemaAC.Services
         public CategoriaServices(ApplicationDbContext context)
         {
             this.context = context;
-            filtrarDatos(1, "Fryann");
+          
         }
         private ApplicationDbContext context;
 

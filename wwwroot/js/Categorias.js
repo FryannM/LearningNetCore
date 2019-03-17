@@ -75,6 +75,8 @@ class Categorias {
         document.getElementById("Mensaje").innerHTML = "";
         document.getElementById("Estado").selectedIndex = 0;
         $('#modalAc').modal('hide');
+        $('#ModalEstado').modal('hide');
+        filtrarDatos(1);
     }
 
     getCategorias(id) {
@@ -99,6 +101,7 @@ class Categorias {
         });
     }
     editar(id, nombre, descripcion, estado, funcion) {
+        debugger;
         var action = this.action;
         $.ajax({
             type: "POST",
@@ -111,7 +114,10 @@ class Categorias {
         });
 
 }
-    editarCategoria(id, funcion) {
+    editarCategoria(id, funcion)
+    {
+        debugger;
+
         var nombre = null;
         var descripcion = null;
         var estado = null;
