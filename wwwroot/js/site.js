@@ -205,15 +205,25 @@ $().ready(() => {
     filtrarDatos(1);
 });
 var idCategoria;
+var funcion;
+
 var AddCategoria = () => {
 
     var nombre = document.getElementById("Nombre").value;
     var descripcion = document.getElementById("Descripcion").value;
     var estado = document.getElementById("Estado").value;
+    var estados = estado.options[estado.selectedIndex].value;
+    if (funcion === 0) {
+
+        var action = 'Categorias/SaveCategoria';
+    } else {
+         action = 'Categorias/editarCategorias';
+
+    }
     //SelectEstado = estado.options[estado.selectedIndex].text;
-    var action = 'Categorias/SaveCategoria';
+    // action = 'Categorias/SaveCategoria';
     var categoria = new Categorias(nombre, descripcion, estado, action);
-    categoria.AddCategoria();
+    categoria.AddCategoria(idCategoria,funcion);
 
 };
 var filtrarDatos = (numPagina) => {
@@ -223,11 +233,12 @@ var filtrarDatos = (numPagina) => {
     categoria.filtrarDatos(numPagina);
 }; 
 
-var ChangeEstatus = (id) => {
+var ChangeEstatus = (id,fun) => {
     idCategoria = id;
+    funcion = fun; 
     var action = 'Categorias/getCategorias';
     var categorias = new Categorias("", "", "", action);
-    categorias.getCategorias(id);
+    categorias.getCategorias(id,funcion);
 
 
 };

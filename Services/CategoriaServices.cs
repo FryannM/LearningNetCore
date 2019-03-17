@@ -6,7 +6,6 @@ using SistemaAC.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace SistemaAC.Services
 {
@@ -17,7 +16,7 @@ namespace SistemaAC.Services
         public CategoriaServices(ApplicationDbContext context)
         {
             this.context = context;
-          
+
         }
         private ApplicationDbContext context;
 
@@ -67,12 +66,12 @@ namespace SistemaAC.Services
                 if (item.Estado == true)
                 {
                     Estado = "<a data-toggle='modal' data-target='#ModalEstado'" +
-                        " onclick='ChangeEstatus(" + item.CatagoriaID + ")' class='label label-success'>Activo</a>";
+                        " onclick='ChangeEstatus(" + item.CatagoriaID + ',' + 0 + ")' class='label label-success'>Activo</a>";
                 }
                 else
                 {
-                    Estado = "<a data-toggle='modal' data-target='#ModalEstado'" +
-                          " onclick='ChangeEstatus(" + item.CatagoriaID + ")' class='label label-danger'>No activo</a>";
+                    Estado = "<a data-toggle='modal' data-target='#ModalEstado'  " +
+                          " onclick='ChangeEstatus(" + item.CatagoriaID + ',' + 0 + ")' class='label label-danger'>No activo</a>";
 
                 }
                 dataFilter += "<tr>" +
@@ -80,14 +79,11 @@ namespace SistemaAC.Services
                 "<td>" + item.Descripcion + "</td>" +
                 "<td>" + Estado + " </td>" +
                 "<td>" +
-               "<a data-toggle='modal' data-target='#myModal' class='btn btn-success'>Edit</a>|" +
+               "<a data-toggle='modal' data-target='#modalAc' onclick='ChangeEstatus'(" +
+                item.CatagoriaID + ',' + 1 + ") class='btn btn-success'>Edit</a>|" +
                "<a data-toggle='modal' data-target='#myModal3' class='btn btn-danger' >Delete</a>" +
                "</td>" +
                 "</tr>";
-
-                //var button = '<a href="Edit/' + data + '" id ="btnEditar"  class="btn btn-primary" alt="Editar"> <i class="fa fa-pencil"></i></a> ' +
-                //       '<a href="javascript:;" data-id=' + data + ' id="btnEliminar" class="btn btn-danger" alt="Eliminar"> <i class="fa fa-trash"></i></a>';
-                //return button;
             }
             object[] dataObj = { dataFilter, paginador };
             data.Add(dataObj);
@@ -101,44 +97,39 @@ namespace SistemaAC.Services
         }
 
         public List<IdentityError> editarCategoria(int idCategoria, string nombre, string descripcion,
-            Boolean estado, string funcion)
+            Boolean estado, int funcion)
         {
 
             var errorlist = new List<IdentityError>();
 
             switch (funcion)
             {
-                case "estado":
-                     if (estado)
-                    {
+                case 0:
+                    if (estado)  {
                         estados = false;
-                    }
-                     else
-                    {
-
+                    }else {
                         estados = true;
                     }
-
-                    var categoria = new Categoria()
-                    {
-                        CatagoriaID = idCategoria,
-                        Nombre = nombre,
-                        Descripcion = descripcion,
-                        Estado = estados,
-                                              
-                    };
-                    context.Update(categoria);
-                    context.SaveChanges();
                     break;
-
+                case 1:
+                    estados = estado;
+                    break;
             }
-            errorlist.Add(new IdentityError
+            var categoria = new Categoria()
+            {
+                CatagoriaID = idCategoria,
+                Nombre = nombre,
+                Descripcion = descripcion,
+                Estado = estados,
+            };
+                context.Update(categoria);
+                context.SaveChanges();
+                errorlist.Add(new IdentityError
             {
                 Code = "2",
                 Description = "Save"
 
             });
-
             return errorlist;
         }
     }

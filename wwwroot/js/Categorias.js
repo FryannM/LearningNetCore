@@ -9,7 +9,7 @@ class Categorias {
         this.action = action;
     }
 
-    AddCategoria() {
+    AddCategoria(id, funcion) {
 
         if (this.nombre === "") {
             document.getElementById('Nombre').focus();
@@ -31,6 +31,7 @@ class Categorias {
                         type: "POST",
                         url: action,
                         data: {
+                            id, funcion,
                             nombre, descripcion, estado
                         },
                         success: (response) => {
@@ -79,23 +80,37 @@ class Categorias {
         filtrarDatos(1);
     }
 
-    getCategorias(id) {
+    getCategorias(id,funcion) {
         var action = this.action;
         $.ajax({
             type: "POST",
             url: action,
             data: { id },
             success: (response) => {
-                if (response[0].response) {
-                    document.getElementById("titleCategoria").innerHTML = "Esta seguro desactivar la  " +
-                        " categoria " + response[0].nombre;
+                if (funcion === 0) {
+                    if (response[0].response) {
+                        document.getElementById("titleCategoria").innerHTML = "Esta seguro desactivar la  " +
+                            " categoria " + response[0].nombre;
+
+                    }
+                    else {
+                        document.getElementById("titleCategoria").innerHTML = "Esta seguroo de activar la  " +
+                            " categoria " + response[0].nombre;
+                    }
+                } else {
+                    document.getElementById("Nombre").value = response[0].nombre;
+                    document.getElementById("Descripcion").value = response[0].descripcion;
+                    if (response[0].estado) {
+                        document.getElementById("Estado").selectedIndex = 1;
+
+                    } else {
+
+                        document.getElementById("Estado").selectedIndex = 2;
+                    }
 
                 }
-                else {
-                    document.getElementById("titleCategoria").innerHTML = "Esta seguroo de activar la  " +
-                        " categoria " + response[0].nombre;
-                }
-                console.log(response);
+              
+              
                 localStorage.setItem("categoria", JSON.stringify(response));
                }
         });

@@ -88,10 +88,7 @@
 
       
        
-        // GET: Categorias/Edit/5
-        /// <summary>
-        /// The Edit
-        /// </summary>
+       
         /// <param name="id">The id<see cref="int?"/></param>
         /// <returns>The <see cref="Task{IActionResult}"/></returns>
         public async Task<IActionResult> Edit(int? id)
@@ -191,7 +188,7 @@
         }
 
         public List<IdentityError> editarCategorias(int id, string nombre, string descripcion,
-            Boolean estado, string funcion)
+            Boolean estado, int funcion)
         {
             return  _categoriservices.editarCategoria(id,nombre,descripcion,estado,funcion);
         }
