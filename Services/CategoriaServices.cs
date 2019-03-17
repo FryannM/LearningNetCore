@@ -12,19 +12,20 @@ namespace SistemaAC.Services
 {
     public class CategoriaServices : ICategoriaServices
     {
-             private  IEnumerable<Categoria> query;
+        private IEnumerable<Categoria> query;
+        private Boolean estados;
         public CategoriaServices(ApplicationDbContext context)
-           {
-               this.context = context;
-            filtrarDatos(1, "Fryann");
-          }
+        {
+            this.context = context;
+          
+        }
         private ApplicationDbContext context;
 
         public List<IdentityError> SaveCategoria(CategoriaViewModel vm)
-        { 
+        {
             var errorList = new List<IdentityError>();
             var categoria = new Categoria
-            {  
+            {
                 Nombre = vm.nombre,
                 Descripcion = vm.descripcion,
                 Estado = Convert.ToBoolean(vm.estado),
@@ -47,7 +48,7 @@ namespace SistemaAC.Services
             int can_paginas, pagina;
             string dataFilter = "", paginador = "", Estado = null;
             List<object[]> data = new List<object[]>();
-      
+
             var categorias = context.Categoria.OrderBy(c => c.Nombre).ToList();
             numRegistros = categorias.Count;
             inicio = (numPagina - 1) * reg_por_pagina;
@@ -72,7 +73,7 @@ namespace SistemaAC.Services
                 {
                     Estado = "<a data-toggle='modal' data-target='#ModalEstado'" +
                           " onclick='ChangeEstatus(" + item.CatagoriaID + ")' class='label label-danger'>No activo</a>";
-                    
+
                 }
                 dataFilter += "<tr>" +
                 "<td>" + item.Nombre + "</td>" +
@@ -92,13 +93,53 @@ namespace SistemaAC.Services
             data.Add(dataObj);
             return data;
 
-
-             
         }
 
-         public List<Categoria> getCategorias(int id)
+        public List<Categoria> getCategorias(int id)
         {
             return context.Categoria.Where(c => c.CatagoriaID == id).ToList();
+        }
+
+        public List<IdentityError> editarCategoria(int idCategoria, string nombre, string descripcion,
+            Boolean estado, string funcion)
+        {
+
+            var errorlist = new List<IdentityError>();
+
+            switch (funcion)
+            {
+                case "estado":
+                     if (estado)
+                    {
+                        estados = false;
+                    }
+                     else
+                    {
+
+                        estados = true;
+                    }
+
+                    var categoria = new Categoria()
+                    {
+                        CatagoriaID = idCategoria,
+                        Nombre = nombre,
+                        Descripcion = descripcion,
+                        Estado = estados,
+                                              
+                    };
+                    context.Update(categoria);
+                    context.SaveChanges();
+                    break;
+
+            }
+            errorlist.Add(new IdentityError
+            {
+                Code = "2",
+                Description = "Save"
+
+            });
+
+            return errorlist;
         }
     }
 }
