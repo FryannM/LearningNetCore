@@ -123,6 +123,7 @@ class Categorias {
                 descripcion = response[0].descripcion;
                 estado = response[0].estado;
                 localStorage.removeItem("categoria");
+                this.editar(id, nombre, descripcion, estado, funcion);
                 break;
             default:
         }

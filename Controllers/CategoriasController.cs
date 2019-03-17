@@ -7,6 +7,7 @@
     using SistemaAC.ModelClass;
     using SistemaAC.Models;
     using SistemaAC.Services;
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -187,6 +188,12 @@
         private bool CategoriaExists(int id)
         {
             return _context.Categoria.Any(e => e.CatagoriaID == id);
+        }
+
+        public List<IdentityError> editarCategoria(int id, string nombre, string descripcion,
+            Boolean estado, string funcion)
+        {
+            return  _categoriservices.editarCategoria(id,nombre,descripcion,estado,funcion);
         }
     }
 }
